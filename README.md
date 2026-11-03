@@ -5,7 +5,7 @@
 
 # AI BDR/SDR 智能体系统
 
-多智能体协作的实时拓客，基于触发事件的个性化外联。
+通过多智能体智能分析和基于触发事件的个性化，实现实时潜客开发。
 
 <img src="https://img.shields.io/badge/python-3.11+-blue" />
 <img src="https://img.shields.io/badge/OpenAI-API-blueviolet" />
@@ -13,78 +13,86 @@
 </div>
 
 <div align="center">
-<img src="https://media.brightdata.com/2025/09/AI-SDR-Agent-demo.gif" alt="AI SDR/BDR Agent 演示">
+<img src="https://media.brightdata.com/2025/09/AI-SDR-Agent-demo.gif" alt="AI SDR/BDR 智能体演示">
 </div>
 
 ---
 
 ## 概述
 
-该系统由「5 个专业智能体」组成：
-  1. 公司发现智能体 — 寻找符合你 ICP（理想客户画像）的公司
-  2. 触发信号检测智能体 — 识别购买信号与最佳触达时机
-  3. 联系人研究智能体 — 提取关键决策者信息
-  4. 信息生成智能体 — 创建个性化外联内容
-  5. 流水线管理器 — 线索评分并与 CRM 集成
+该系统使用 **5 个专业 AI 智能体**：
+  1. 公司发现智能体：查找符合你的 ICP 的公司
+  2. 触发事件检测智能体：识别购买信号和最佳时机
+  3. 联系人研究智能体：提取决策者信息
+  4. 消息生成智能体：创建个性化推广消息
+  5. 销售管道管理器：为潜在客户评分并与 CRM 集成
 
-[访问我们的博客，阅读分步指南](https://www.bright.cn/blog/ai/ai-sdr-agent-with-web-mcp)
+[**访问我们博客上的分步指南**](https://www.bright.cn/blog/ai/ai-sdr-agent-with-web-mcp)
 
 ---
 
-## 前置条件
+## 前提条件
 
 - Python 3.11+
-- Node.js 与 npm（用于 MCP 服务器）
+- Node.js 和 npm（用于 MCP 服务器）
 - API 密钥：
-    - [OpenAI API key](https://platform.openai.com/api-keys)
-    - 具有 Web MCP 访问权限的 [Bright Data](https://www.bright.cn/) 账号
+    - [OpenAI API 密钥](https://platform.openai.com/api-keys)
+    - 拥有网页 MCP 访问权限的 [Bright Data](https://www.bright.cn/) 账户
     - HubSpot CRM 凭据（可选）
 
 ---
 
 ## 快速开始
 
-1. 克隆与初始化：
+1. **克隆并设置：**
 
-        git clone <repository>
-        cd AI_BDR_SDR
-        python setup.py
+   ```bash
+   git clone https://github.com/bright-cn/ai-sdr-bdr-agent.git
+   cd ai-sdr-bdr-agent
+   pip install -r requirements.txt
+   ```
 
-2. 配置 API 密钥：  
-   编辑 `.env` 文件并填入你的凭据：
+2. **配置 API 密钥：**  
+   将 `env.example` 复制到 `.env`，并填写你的凭据：
 
-        OPENAI_API_KEY=your_key_here
-        BRIGHT_DATA_API_TOKEN=your_token_here
-        HUBSPOT_API_KEY=your_hubspot_key_here
+   ```bash
+   cp env.example .env
+   ```
 
-3. 测试系统：
+   ```
+   BRIGHT_DATA_API_TOKEN=your_token_here
+   WEB_UNLOCKER_ZONE=your_web_unlocker_zone_name
+   BROWSER_ZONE=your_browser_zone_name
+   OPENAI_API_KEY=your_key_here
+   HUBSPOT_API_KEY=your_hubspot_key_here
+   ```
 
-        python test_workflow.py
+3. **运行应用程序：**
 
-4. 运行应用：
-
-        streamlit run ai_bdr_system.py
+   ```bash
+   streamlit run ai_bdr_system.py
+   ```
 
 ---
 
 ## 功能
 
-- 多智能体工作流：并行处理、实时数据、评分与 CRM 集成
-- 触发情报：招聘激增、融资动态、管理层变动、业务扩张
-- 个性化引擎：上下文感知、基于触发的多渠道外联、A/B 测试
-- 导出与集成：CSV、HubSpot 同步、字段映射与批量联系人
+- 多智能体工作流：并行处理、实时数据、评分和 CRM 集成
+- 触发事件智能分析：招聘激增、融资、领导层变动和业务扩张
+- 个性化引擎：上下文感知、基于触发事件、多渠道和 A/B 测试
+- 导出与集成：CSV、HubSpot 同步、字段映射和批量联系人
 
 ---
 
 ## 系统架构
 
     ┌─────────────────────────────────────────────────────────────┐
-    │                    Streamlit 前端                          │
+    │                    Streamlit Frontend                      │
     ├─────────────────────────────────────────────────────────────┤
-    │                    CrewAI 编排                             │
+    │                    CrewAI Orchestration                    │
     ├─────────────────────────────────────────────────────────────┤
-    │  发现 │  触发 │  联系人 │  信息 │  流水线                   │
-    │  Agent│ Agent │ Agent  │ Agent │ Manager                   │
+    │  Discovery │ Triggers │ Contacts │ Messages │ Pipeline      │
+    │   Agent    │  Agent   │  Agent   │  Agent   │ Manager       │
     ├─────────────────────────────────────────────────────────────┤
     │    Bright Data MCP │ OpenAI │ HubSpot API                  │
     └─────────────────────────────────────────────────────────────┘
@@ -93,22 +101,22 @@
 
 ## 配置
 
-### ICP 定向
-  - 行业选择（SaaS、FinTech、E-commerce 等）
-  - 公司规模区间
-  - 地理定向
+### ICP 定位
+  - 行业选择（SaaS、金融科技、电商等）
+  - 公司规模范围
+  - 地理位置定位
   - 自定义条件
 
-### 信息类型
-  - 冷邮件营销
-  - LinkedIn 加好友请求
+### 消息类型
+  - 冷邮件营销活动
+  - LinkedIn 连接请求
   - 跟进序列
   - 自定义模板
 
-### 线索评分
-  - ICP 匹配度（30%）
-  - 触发事件得分（30%）
-  - 联系人质量（20%）
+### 潜在客户评分
+  - ICP 匹配分数（30%）
+  - 触发事件分数（30%）
+  - 联系人质量分数（20%）
   - 时机优化（20%）
 
 ---
@@ -116,88 +124,88 @@
 ## API 集成
 
 ### Bright Data MCP
-  - 实时网页抓取
+  - 实时网页爬虫
   - LinkedIn 公司数据
-  - 新闻与新闻稿
-  - 联系方式信息
+  - 新闻和新闻稿
+  - 联系信息
 
 ### OpenAI GPT-4
-  - 信息个性化
-  - 文本生成
-  - 触发分析
-  - 线索资格评估
+  - 消息个性化
+  - 内容生成
+  - 触发事件分析
+  - 潜在客户资格评估
 
 ### HubSpot CRM
-  - 联系人创建/更新
-  - 线索评分同步
+  - 创建/更新联系人
+  - 潜在客户评分同步
   - 自定义属性
-  - 流水线管理
+  - 销售管道管理
 
 ---
 
-## 故障排查
+## 故障排除
 
 1. MCP 连接错误
 
-        npm install -g @brightdata/mcp
+   ```bash
+   npm install -g @brightdata/mcp
+   ```
 
-2. 依赖缺失
+2. 缺少依赖项
 
-        pip install -r requirements.txt
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 3. API 密钥错误
 
-    - 核对 `.env` 文件中的密钥
-    - 检查配额与权限
-
-### 验证
-
-        python test_workflow.py
+    - 验证 `.env` 文件中的密钥
+    - 检查 API 配额和权限
 
 ---
 
 ## 性能指标
 
-- 发现公司数：15-25
-- 触发事件：8-15
-- 优质联系人：40-60
+- 发现的公司：15-25 家
+- 触发事件：8-15 个
+- 优质联系人：40-60 个
 - 回复率：15-25%
-- 预约会议：3-8%
+- 会议预约率：3-8%
 
 ---
 
 ## 安全与隐私
 
-- API 密钥存储于环境变量
-- 会话结束后不持久化数据
-- 符合 GDPR 的联系人处理
-- API 保护的限流机制
+- API 密钥存储在环境变量中
+- 会话结束后不保留任何数据
+- 符合 GDPR 要求的联系人数据处理
+- 通过速率限制保护 API
 
 ---
 
 ## 许可证
 
-本项目仅用于教育与内部演示目的。
+本项目仅用于教育和内部演示。
 
 ---
 
 ## 了解更多
 
-- [Bright Data Web MCP 的工作原理](https://docs.brightdata.com/mcp-server/overview)
+- [Bright Data 的网页 MCP 如何运作](https://docs.brightdata.com/mcp-server/overview)
 - [Streamlit 文档](https://docs.streamlit.io/)
 - [OpenAI 平台文档](https://platform.openai.com/docs)
 - [CrewAI 文档](https://docs.crewai.com/)
 
 ---
 
-准备好提升你的销售开发效率了吗？部署你的 AI SDR 智能体，即刻把手动外联转化为自动化、可验证的高质量销售流水线！
+**准备好提升你的销售开发能力了吗？部署你自己的 AI SDR 智能体，立即将人工推广转变为自动化的高质量销售管道！**
 
 <p align="center">
   <a href="https://www.bright.cn/cp/start" target="_blank" style="text-decoration:none;">
-    <img src="https://img.shields.io/badge/Get%20Started-%233D7FFC?style=for-the-badge&logo=rocket&logoColor=white" alt="Get Started" style="height: 48px; border-radius: 8px;">
+    <img src="https://img.shields.io/badge/Get%20Started-%233D7FFC?style=for-the-badge&logo=rocket&logoColor=white" alt="立即开始" style="height: 48px; border-radius: 8px;">
   </a>
 </p>
 
 ---
 
-**由 Bright Data 与 OpenAI 倾情打造 ❤️**
+**使用 Bright Data 和 OpenAI 倾情打造 ❤️**
